@@ -24,6 +24,9 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
         ]);
 
-        User::factory(100)->create();
+        if (env('app.env') != 'production') {
+            User::factory(100)->create();
+        }
+        
     }
 }
