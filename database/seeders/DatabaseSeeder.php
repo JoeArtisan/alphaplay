@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create([
-            'cr_id' => 504010984,
-            'name' => 'Eddy Alfaro',
-            'email' => 'ealfarov02@gmail.com',
-            'password' => Hash::make('12345678'),
+            'cr_id' => 500000000,
+            'name' => 'Administrador',
+            'email' => 'admin@alphaplay.com',
+            'password' => Hash::make('123adm456*'),
             'role' => 1,
             'status' => 1,
         ]);
