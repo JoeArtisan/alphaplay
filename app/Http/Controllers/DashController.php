@@ -19,11 +19,11 @@ class DashController extends Controller
     {
         if ($request->user()) return redirect()->route('dashboard');
         
-        /* $id = 4600; // first 4213 07/05/1996 - last 6625 2/11/2021, 
+        $id = 4600; // first 4213 07/05/1996 - last 6625 2/11/2021, 
         $this->getChances($id);
 
         $fates = Fate::all();
-        dd($fates); */
+        dd($fates);
 
         return Inertia::render('Welcome');
     }
