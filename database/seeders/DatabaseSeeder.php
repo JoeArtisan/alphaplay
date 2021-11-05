@@ -22,11 +22,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123adm456*'),
             'role' => 1,
             'status' => 1,
-        ]);
-
-        if (env('app.env') != 'production') {
-            User::factory(100)->create();
-        }
-        
+        ]);        
     }
 }
