@@ -12,9 +12,7 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-                                <a :href="route('welcome')">
-                                    AlphaPlay
-                                </a>
+                                <img class="w-32" src="/img/logo.jpg">
                             </div>
 
                             <!-- Navigation Links -->

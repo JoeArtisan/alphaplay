@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Client\Pool;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Fate;
 
 class DashController extends Controller
 {
@@ -18,6 +19,12 @@ class DashController extends Controller
     {
         if ($request->user()) return redirect()->route('dashboard');
         
+        /* $id = 4600; // first 4213 07/05/1996 - last 6625 2/11/2021, 
+        $this->getChances($id);
+
+        $fates = Fate::all();
+        dd($fates); */
+
         return Inertia::render('Welcome');
     }
 
@@ -52,7 +59,7 @@ class DashController extends Controller
             $loteria_page = $responses['loteria_page']->json();
         }
 
-        for ($i = 8; $i >= 0; $i--) { 
+        for ($i = 6; $i >= 0; $i--) { 
             $cdate = strtotime($chances_page[$i]['fecha']);
             $ldate = strtotime($chances_page[$i]['fecha']);
 
@@ -79,7 +86,27 @@ class DashController extends Controller
                 ],
             ],
         ];
+        
 
-        return Inertia::render('Dashboard', ['data' => $data]);
+        return Inertia::render('Dashboard', ['data' => $data]); 
+    }
+
+    public function getChances(Int $id){
+        $to = $id + 100;
+        for ($i = $id; $i <= $to; $i++) { 
+            $link = 'https://integration.jps.go.cr/api/App/chances/'.$i;
+            $sorteo = Http::get($link)->json();
+            
+            if (!Fate::where('fate_id', $i)->get() && count($sorteo['premios'][0])) {
+                Fate::create([
+                    'fate_id' => $i,
+                    'role' => 1,
+                    'award' => $sorteo['premios'][0]['numero'],
+                    'serie' => $sorteo['premios'][0]['serie'],
+                    'release' => $sorteo['fecha'],
+                    'validity' => $sorteo['vigencia'],
+                ]);
+            }
+        }
     }
 }
